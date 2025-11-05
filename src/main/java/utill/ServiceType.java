@@ -1,5 +1,5 @@
 package utill;
 
-public class ServiceType {
-    //CUSTOMER,ITEM,ORDER
+public enum ServiceType {
+    CUSTOMER,ITEM,ORDER
 }

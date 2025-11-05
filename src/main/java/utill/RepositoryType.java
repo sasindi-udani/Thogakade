@@ -1,5 +1,5 @@
 package utill;
 
-public class RepositoryType {
-   // CUSTOMER,ITEM,ORDER
+public enum RepositoryType {
+    CUSTOMER,ITEM,ORDER
 }

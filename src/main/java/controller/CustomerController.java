@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import lombok.Data;
+import utill.CrudUtill;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -25,7 +26,7 @@ import java.util.ArrayList;
 
 @Data
 
-public class ViewCustomer  {
+public class CustomerController {
 
     public TextField txtSalary;
     public TableColumn colSalary;
@@ -60,11 +61,12 @@ public class ViewCustomer  {
         colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
         colSalary.setCellValueFactory(new PropertyValueFactory<>("salary"));
 
-        Connection connection = DbConnection.getInstance().getConnection();
+//        Connection connection = DbConnection.getInstance().getConnection();
         ArrayList<Customer> customerArrayList = new ArrayList<>();
         try{
-            PreparedStatement prt = connection.prepareStatement("SELECT * FROM customer");
-            ResultSet resultSet = prt.executeQuery();
+//            PreparedStatement prt = connection.prepareStatement("SELECT * FROM customer");
+//            ResultSet resultSet = prt.executeQuery();
+            ResultSet resultSet = CrudUtill.execute("SELECT * FROM customer");
             while (resultSet.next()) {
                 Customer customer = new Customer(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getDouble(4));
                 customerArrayList.add(customer);

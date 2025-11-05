@@ -1,4 +1,6 @@
 package repository.custom;
 
-public interface OrderRepository {
+import repository.SuperRepository;
+
+public interface OrderRepository extends SuperRepository {
 }

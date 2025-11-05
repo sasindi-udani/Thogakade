@@ -1,5 +1,7 @@
 package service.custom;
 
-public interface ItemService {
+import service.SuperService;
+
+public interface ItemService extends SuperService {
     Object getAllItemIds();
 }
