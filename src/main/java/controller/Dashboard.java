@@ -37,4 +37,7 @@ public class Dashboard {
         this.root.getChildren().clear();
         this.root.getChildren().add(load);
     }
+
+    public void btnOrderOnaction(ActionEvent event) {
+    }
 }

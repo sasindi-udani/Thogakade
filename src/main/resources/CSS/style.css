@@ -1,0 +1,49 @@
+/* Normal state */
+.btnDashboard {
+        -fx-background-color: linear-gradient(to bottom, #f1f1f1, #dcdcdc);
+        -fx-text-fill:   #777C6D;
+        -fx-font-size: 14px;
+        -fx-font-weight: bold;
+        -fx-background-radius: 8;
+        -fx-padding: 10 20;
+        -fx-cursor: hand;
+        -fx-border-color: transparent;
+        -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 5, 0, 0, 2);
+}
+
+/* Hover state */
+.btnDashboard:hover {
+    -fx-background-color:  #0046FF;
+    -fx-text-fill: white;
+}
+
+/* Pressed (clicked) state */
+.btnDashboard:pressed {
+    -fx-background-color:  #0046FF;
+    -fx-text-fill: white;
+    -fx-translate-y: 2;   /* moves down slightly */
+    -fx-effect: none;      /* remove shadow if you use one */
+}
+
+.btnDashboard-active {
+    -fx-background-color: #0046FF;
+    -fx-text-fill: white;
+    -fx-border-color: white;
+    -fx-border-width: 2;
+}
+.back {
+    -fx-background-image: url("@../images/thogakade-logo.png");   /* path to your image */
+    -fx-background-repeat: no-repeat;             /* no tiling */
+    -fx-background-size: cover;                   /* stretch to fill window */
+    -fx-background-position: center center;       /* center image */
+}
+.topicBar{
+        -fx-background-color: linear-gradient(to bottom, #f1f1f1, #dcdcdc);
+        -fx-background-radius: 8;
+        -fx-text-align:center;
+}
+.topic{
+    -fx-text-fill:   #777C6D;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}

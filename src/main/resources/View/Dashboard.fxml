@@ -1,20 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Dashboard">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#233168" height="600.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
-      <Button layoutX="40.0" layoutY="320.0" mnemonicParsing="false" onAction="#btnCustomerManageOnAction" prefHeight="25.0" prefWidth="120.0" style="-fx-background-color: #acd4ee;" text="Customer Data" />
-      <AnchorPane fx:id="root" layoutX="199.0" prefHeight="600.0" prefWidth="700.0" />
-      <Button fx:id="btnItemData" layoutX="40.0" layoutY="373.0" mnemonicParsing="false" onAction="#btnItemDataOnAction" prefHeight="25.0" prefWidth="120.0" style="-fx-background-color: #acd4ee;" text="Item Data" />
-      <ImageView fitHeight="190.0" fitWidth="173.0" layoutX="14.0" layoutY="24.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="600.0" stroke="#dad9d9" strokeType="INSIDE" width="200.0" />
+      <AnchorPane fx:id="root" layoutX="197.0" prefHeight="600.0" prefWidth="700.0" stylesheets="@../CSS/style.css">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="32.0" layoutY="166.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="593.0" fitWidth="692.0" layoutX="23.0" opacity="0.15">
+               <image>
+                  <Image url="@../images/thogakade-logo.png" />
+               </image>
+            </ImageView>
+         </children></AnchorPane>
+      <ImageView fitHeight="150.0" fitWidth="156.0" layoutX="16.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="122.0" fitWidth="122.0" layoutX="39.0" layoutY="26.0">
          <image>
             <Image url="@../../../../images/thogakade-logo.png" />
+         </image>
+      </ImageView>
+      <JFXButton layoutX="19.0" layoutY="216.0" onAction="#btnCustomerManageOnAction" prefHeight="38.0" prefWidth="169.0" styleClass="btnDashboard" stylesheets="@../CSS/style.css" text="Customer Details">
+         <font>
+            <Font name="Berlin Sans FB" size="16.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="19.0" layoutY="279.0" onAction="#btnItemDataOnAction" prefHeight="38.0" prefWidth="169.0" styleClass="btnDashboard" stylesheets="@../CSS/style.css" text="Item Manager">
+         <font>
+            <Font name="Berlin Sans FB" size="16.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="19.0" layoutY="343.0" onAction="#btnOrderOnaction" prefHeight="38.0" prefWidth="169.0" styleClass="btnDashboard" stylesheets="@../CSS/style.css" text="Place Order">
+         <font>
+            <Font name="Berlin Sans FB" size="16.0" />
+         </font>
+      </JFXButton>
+      <ImageView fitHeight="122.0" fitWidth="131.0" layoutX="38.0" layoutY="46.0">
+         <image>
+            <Image url="@../images/thogakade-logo.png" />
          </image>
       </ImageView>
    </children>

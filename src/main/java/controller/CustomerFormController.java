@@ -1,6 +1,7 @@
 package controller;
 
 import Model.Customer;
+import com.jfoenix.controls.JFXTextField;
 import dbConnection.DbConnection;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -12,6 +13,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lombok.Data;
 import utill.CrudUtill;
@@ -26,14 +28,36 @@ import java.util.ArrayList;
 
 @Data
 
-public class CustomerController {
+public class CustomerFormController {
 
-    public TextField txtSalary;
-    public TableColumn colSalary;
-    public TableColumn colAddress;
-    public TextField txtAddress;
+//    public TextField txtSalary;
+//    public TableColumn colSalary;
+//    public TableColumn colAddress;
+//    public TextField txtAddress;
+
+
 //    @FXML
-//    private TableColumn<?, ?> colAuthor;
+//    private TableColumn<?, ?> colID;
+//
+//    @FXML
+//    private TableColumn<?, ?> colName;
+
+//
+//    @FXML
+//    private TableView<?> tblCustomer;
+//
+//
+//    @FXML
+//    private TextField txtId;
+//
+//    @FXML
+//    private TextField txtName;
+
+    @FXML
+    private AnchorPane back;
+
+    @FXML
+    private TableColumn<?, ?> colAddress;
 
     @FXML
     private TableColumn<?, ?> colID;
@@ -42,17 +66,22 @@ public class CustomerController {
     private TableColumn<?, ?> colName;
 
     @FXML
+    private TableColumn<?, ?> colSalary;
+
+    @FXML
     private TableView<Customer> tblCustomer;
 
-//    @FXML
-//    private TextField txtAuthor;
-
+    @FXML
+    private JFXTextField txtAddress;
 
     @FXML
-    private TextField txtId;
+    private JFXTextField txtId;
 
     @FXML
-    private TextField txtName;
+    private JFXTextField txtName;
+
+    @FXML
+    private JFXTextField txtSalary;
 
 
     public void tblLoard() throws SQLException {
@@ -97,7 +126,7 @@ public class CustomerController {
             psTm.setDouble(4,customer.getSalary());
 
             if(psTm.executeUpdate()>0){
-                new Alert(Alert.AlertType.INFORMATION,"Book added").show();
+                new Alert(Alert.AlertType.INFORMATION,"Customer added").show();
             }
         }catch (SQLException e){
             throw new RuntimeException(e);
@@ -124,6 +153,15 @@ public class CustomerController {
         Stage stage = new Stage();
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("View/viewCustomer.fxml"))));
         stage.show();
+    }
+
+    public void onActionSearchCustomer(ActionEvent event) {
+    }
+
+    public void onActionDeleteCustomer(ActionEvent event) {
+    }
+
+    public void onActionUpdateCustomer(ActionEvent event) {
     }
 }
 
