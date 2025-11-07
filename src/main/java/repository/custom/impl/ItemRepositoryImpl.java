@@ -11,24 +11,44 @@ import java.util.ArrayList;
 import java.util.List;
 import utill.CrudUtill;
 
-public class ItemRepositoryImpl implements ItemRepository {
+public class ItemRepositoryImpl extends CrudUtill {
+//    @Override
+//    public boolean save(Item item) throws SQLException {
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean update(Item item) {
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean delete(String s) {
+//        return false;
+//    }
+//
+//    @Override
+//    public Customer searchById(String id) throws SQLException {
+//        return null;
+//    }
+
     @Override
-    public boolean save(Item item) throws SQLException {
+    public boolean save(Customer customer) throws SQLException {
         return false;
     }
 
     @Override
-    public boolean update(Item item) {
+    public boolean update(Object o) {
         return false;
     }
 
     @Override
-    public boolean delete(String s) {
+    public boolean delete(Object o) {
         return false;
     }
 
     @Override
-    public Customer searchById(String id) throws SQLException {
+    public Object searchById(Object o) throws SQLException {
         return null;
     }
 

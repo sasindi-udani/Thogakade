@@ -1,42 +1,66 @@
 package repository.custom.impl;
 
 import Model.Customer;
-import repository.RepositoryFactory;
-import repository.custom.CustomerRepository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
+
+import repository.custom.CustomerRepository;
 import utill.CrudUtill;
-import utill.RepositoryType;
 
 public class CustomerRepositoryImpl implements CustomerRepository {
 
-    CustomerRepository customerRepository = RepositoryFactory.getInstance().getRepositoryType(RepositoryType.CUSTOMER);
+    //CustomerRepository customerRepository = RepositoryFactory.getInstance().getRepositoryType(RepositoryType.CUSTOMER);
+
+//    @Override
+//    public boolean save(Customer customer) throws SQLException {
+//
+//    }
+
+//    @Override
+//    public boolean save(Customer customer) throws SQLException {
+//        return CrudUtill.execute("INSERT INTO customer VALUES(?,?,?,?)",
+//                customer.getId(),
+//                customer.getName(),
+//                customer.getAddress(),
+//                customer.getSalary());
+//    }
 
     @Override
-    public boolean save(Object o) throws SQLException {
-        return false;
+    public boolean save(Customer customer) throws SQLException {
+        return CrudUtill.execute("INSERT INTO customer VALUES(?,?,?,?)",
+                customer.getId(),
+                customer.getName(),
+                customer.getAddress(),
+                customer.getSalary());
     }
 
     @Override
-    public boolean update(Object o) {
-        return false;
+    public boolean update(Customer customer) throws SQLException {
+        return CrudUtill.execute(
+                "UPDATE customer SET name=?, address=?, salary=? WHERE id=?",
+                customer.getName(),
+                customer.getAddress(),
+                customer.getSalary(),
+                customer.getId()
+        );
     }
 
     @Override
-    public boolean delete(Object o) {
-        return false;
+    public boolean delete(String id) throws SQLException {
+        return CrudUtill.execute("DELETE FROM customer WHERE id='"+id+"'");
     }
 
     @Override
-    public Object searchById(Object o) throws SQLException {
-        return null;
+    public Customer searchById(String id) throws SQLException {
+        ResultSet resultSet= CrudUtill.execute("SELECT * FROM customer WHERE id='"+id+"'");
+        resultSet.next();
+        return new Customer(resultSet.getNString(1),resultSet.getString(2), resultSet.getNString(3),resultSet.getDouble(4) );
     }
 
     @Override
-    public List getAll() throws SQLException {
+    public List<Customer> getAll() throws SQLException {
         return List.of();
     }
 
@@ -44,6 +68,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     public Integer getCount() {
         return 0;
     }
+
 
 //    @Override
 //    public boolean save(Customer customer) throws SQLException {

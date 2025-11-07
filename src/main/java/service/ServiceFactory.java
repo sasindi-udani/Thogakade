@@ -18,11 +18,15 @@ public class ServiceFactory {
 
     public <T extends SuperService>T getServiceType(ServiceType type){
         switch (type){
-            case CUSTOMER:return (T) new CustomerServiceImpl();
-            case ITEM:return (T) new ItemServiceImpl();
-            case ORDER:return (T) new OrderServiceImpl();
+            case CUSTOMER:
+                return (T) new CustomerServiceImpl();
+            case ITEM:
+                return (T) new ItemServiceImpl();
+            case ORDER:
+                return (T) new OrderServiceImpl();
+            default:
+                return null;
         }
-        return null;
     }
 
 }

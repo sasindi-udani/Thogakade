@@ -16,7 +16,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lombok.Data;
+import service.ServiceFactory;
+import service.custom.CustomerService;
+import service.custom.impl.CustomerServiceImpl;
 import utill.CrudUtill;
+import utill.ServiceType;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -83,8 +87,10 @@ public class CustomerFormController {
     @FXML
     private JFXTextField txtSalary;
 
+    CustomerService service = ServiceFactory.getInstance().getServiceType(ServiceType.CUSTOMER);
 
-    public void tblLoard() throws SQLException {
+
+    public void tblLoard() {
         colID.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
@@ -111,34 +117,40 @@ public class CustomerFormController {
     @FXML
     void onActionAddCust(ActionEvent event) throws SQLException {
 
-        Connection connection = DbConnection.getInstance().getConnection();
         Customer customer = new Customer(
                 txtId.getText(),
                 txtName.getText(),
                 txtAddress.getText(),
                 Double.parseDouble(txtSalary.getText()));
-
         try{
-            PreparedStatement psTm = connection.prepareStatement("INSERT INTO customer VALUES(?,?,?,?)");
-            psTm.setString(1,customer.getId());
-            psTm.setString(2,customer.getName());
-            psTm.setString(3,customer.getAddress());
-            psTm.setDouble(4,customer.getSalary());
-
-            if(psTm.executeUpdate()>0){
-                new Alert(Alert.AlertType.INFORMATION,"Customer added").show();
+            if (service.addCustomer(customer)) {
+                new Alert(Alert.AlertType.INFORMATION, "Customer Added!").show();
+                tblLoard();
             }
-        }catch (SQLException e){
-            throw new RuntimeException(e);
+        }catch(SQLException ex) {
+            throw new RuntimeException(ex);
         }
-        tblLoard();
 
-//        DbConnection.getInstance().getCustomerList().add( new Customer(
-//                Integer.parseInt(txtId.getText()),
+//        Connection connection = DbConnection.getInstance().getConnection();
+//        Customer customer = new Customer(
+//                txtId.getText(),
 //                txtName.getText(),
-//                txtAuthor.getText()));
+//                txtAddress.getText(),
+//                Double.parseDouble(txtSalary.getText()));
+//        try{
+//            PreparedStatement psTm = connection.prepareStatement("INSERT INTO customer VALUES(?,?,?,?)");
+//            psTm.setString(1,customer.getId());
+//            psTm.setString(2,customer.getName());
+//            psTm.setString(3,customer.getAddress());
+//            psTm.setDouble(4,customer.getSalary());
 //
-//                tblLoard();
+//            if(psTm.executeUpdate()>0){
+//                new Alert(Alert.AlertType.INFORMATION,"Customer added").show();
+//            }
+//            tblLoard();
+//        }catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
 
     }
 
@@ -155,13 +167,36 @@ public class CustomerFormController {
         stage.show();
     }
 
-    public void onActionSearchCustomer(ActionEvent event) {
+    public void onActionSearchCustomer(ActionEvent event) throws SQLException {
+        Customer customer = service.searchCustomerById(txtId.getText());
+        txtName.setText(customer.getName());
+        txtAddress.setText(customer.getAddress());
+        txtSalary.setText(Double.toString(customer.getSalary()));
     }
 
-    public void onActionDeleteCustomer(ActionEvent event) {
+    public void onActionDeleteCustomer(ActionEvent event) throws SQLException {
+        if(service.deleteCustomer(txtId.getText())){
+            new Alert(Alert.AlertType.INFORMATION, "Customer Deleted!").show();
+            tblLoard();
+        }
     }
 
     public void onActionUpdateCustomer(ActionEvent event) {
+        Customer customer = new Customer(
+                txtId.getText(),
+                txtName.getText(),
+                txtAddress.getText(),
+                Double.parseDouble(txtSalary.getText()));
+        try{
+            if (service.updateCustomer(customer)) {
+                new Alert(Alert.AlertType.INFORMATION, "Customer Updated!").show();
+                tblLoard();
+            }else{
+                new Alert(Alert.AlertType.INFORMATION, "Cannot find customer.Retry with the correct ID!").show();
+            }
+        }catch(SQLException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 }
 

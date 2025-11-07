@@ -22,10 +22,14 @@ public class RepositoryFactory {
 
     public <T extends SuperRepository>T getRepositoryType(RepositoryType type){
         switch(type){
-            case CUSTOMER:new CustomerRepositoryImpl();
-            case ITEM:new ItemRepositoryImpl();
-            case ORDER:new OrderRepositoryImpl();
+            case CUSTOMER:
+                return (T) new CustomerRepositoryImpl();
+            case ITEM:
+                return (T) new ItemRepositoryImpl();
+            case ORDER:
+                return (T) new OrderRepositoryImpl();
+            default:
+                return null;
         }
-        return null;
     }
 }

@@ -2,34 +2,33 @@ package service.custom.impl;
 
 import Model.Customer;
 import repository.RepositoryFactory;
+import repository.custom.CustomerRepository;
 import service.custom.CustomerService;
-import utill.CrudUtill;
 import utill.RepositoryType;
-
-import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public class CustomerServiceImpl implements CustomerService {
 
-    CustomerService customerService = RepositoryFactory.getInstance().getRepositoryType(RepositoryType.CUSTOMER);
+    CustomerRepository customerRepository = RepositoryFactory.getInstance().getRepositoryType(RepositoryType.CUSTOMER);
     @Override
-    public boolean addCustomer(Customer customer) {
-        return false;
+    public boolean addCustomer(Customer customer) throws SQLException {
+        return customerRepository.save(customer);
     }
 
     @Override
-    public boolean updateCustomer(Customer customer) {
-        return false;
+    public boolean updateCustomer(Customer customer) throws SQLException {
+        return customerRepository.update(customer);
     }
 
     @Override
-    public boolean deleteCustomer(String id) {
-        return false;
+    public boolean deleteCustomer(String id) throws SQLException {
+        return customerRepository.delete(id);
     }
 
     @Override
-    public boolean searchCustomerById(String id) {
-        return false;
+    public Customer searchCustomerById(String id) throws SQLException {
+        return customerRepository.searchById(id);
     }
 
     @Override
