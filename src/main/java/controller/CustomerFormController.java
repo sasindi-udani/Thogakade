@@ -161,11 +161,11 @@ public class CustomerFormController {
 
     }
 
-    public void onActionLoardItemForm(ActionEvent actionEvent) throws IOException {
-        Stage stage = new Stage();
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("View/viewCustomer.fxml"))));
-        stage.show();
-    }
+//    public void onActionLoardItemForm(ActionEvent actionEvent) throws IOException {
+//        Stage stage = new Stage();
+//        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("View/viewCustomer.fxml"))));
+//        stage.show();
+//    }
 
     public void onActionSearchCustomer(ActionEvent event) throws SQLException {
         Customer customer = service.searchCustomerById(txtId.getText());

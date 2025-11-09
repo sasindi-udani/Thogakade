@@ -11,50 +11,56 @@ import java.util.ArrayList;
 import java.util.List;
 import utill.CrudUtill;
 
-public class ItemRepositoryImpl extends CrudUtill {
-//    @Override
-//    public boolean save(Item item) throws SQLException {
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean update(Item item) {
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean delete(String s) {
-//        return false;
-//    }
-//
-//    @Override
-//    public Customer searchById(String id) throws SQLException {
-//        return null;
-//    }
+public class ItemRepositoryImpl implements ItemRepository {
 
     @Override
-    public boolean save(Customer customer) throws SQLException {
-        return false;
+    public boolean save(Item item) throws SQLException {
+        return CrudUtill.execute("INSERT INTO item VALUES(?,?,?,?)",
+                item.getCode(),
+                item.getDescription(),
+                item.getUnitPrice(),
+                item.getQtyOnHand());
     }
 
     @Override
-    public boolean update(Object o) {
-        return false;
+    public boolean update(Item item) throws SQLException {
+        return CrudUtill.execute(
+                "UPDATE item SET description=?, unitPrice=?, qtyOnHand=? WHERE code=?",
+                item.getCode(),
+                item.getDescription(),
+                item.getUnitPrice(),
+                item.getQtyOnHand()
+        );
     }
 
     @Override
-    public boolean delete(Object o) {
-        return false;
+    public boolean delete(String code) throws SQLException {
+        return CrudUtill.execute("DELETE FROM item WHERE code='"+code+"'");
     }
 
     @Override
-    public Object searchById(Object o) throws SQLException {
-        return null;
+    public Item searchById(String code) throws SQLException {
+        ResultSet resultSet= CrudUtill.execute("SELECT * FROM item WHERE code='"+code+"'");
+        resultSet.next();
+        return new Item(resultSet.getString(1),resultSet.getString(2), resultSet.getDouble(3),resultSet.getString(4) );
     }
 
     @Override
-    public List<Customer> getAll() throws SQLException {
-        return List.of();
+    public List<Item> getAll() throws SQLException {
+        List<Item> itemList = new ArrayList<>();
+
+        ResultSet resultSet = CrudUtill.execute("SELECT * FROM item");
+
+        while (resultSet.next())
+            itemList.add(new Item(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getDouble(3),
+                    resultSet.getString(4)
+            ));
+
+
+        return itemList;
     }
 
     @Override

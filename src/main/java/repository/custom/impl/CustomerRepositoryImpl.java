@@ -4,6 +4,7 @@ import Model.Customer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import repository.custom.CustomerRepository;
@@ -56,12 +57,25 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     public Customer searchById(String id) throws SQLException {
         ResultSet resultSet= CrudUtill.execute("SELECT * FROM customer WHERE id='"+id+"'");
         resultSet.next();
-        return new Customer(resultSet.getNString(1),resultSet.getString(2), resultSet.getNString(3),resultSet.getDouble(4) );
+        return new Customer(resultSet.getString(1),resultSet.getString(2), resultSet.getString(3),resultSet.getDouble(4) );
     }
 
     @Override
     public List<Customer> getAll() throws SQLException {
-        return List.of();
+        List<Customer> customerList = new ArrayList<>();
+
+        ResultSet resultSet = CrudUtill.execute("SELECT * FROM customer");
+
+        while (resultSet.next())
+            customerList.add(new Customer(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getDouble(4)
+            ));
+
+
+        return customerList;
     }
 
     @Override

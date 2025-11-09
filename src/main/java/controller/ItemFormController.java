@@ -1,5 +1,6 @@
 package controller;
 
+import Model.Customer;
 import Model.Item;
 import dbConnection.DbConnection;
 import javafx.collections.FXCollections;
@@ -10,6 +11,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import service.ServiceFactory;
+import service.custom.CustomerService;
+import service.custom.ItemService;
+import utill.CrudUtill;
+import utill.ServiceType;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -59,31 +65,17 @@ public class ItemFormController {
     @FXML
     private TextField txtQty;
 
-//    @FXML
-//    void btnAddItemOnAction(ActionEvent event) {
-//        DbConnection.getInstance().getItemList().add(new Item(
-//                txtCode.getText(),
-//                txtDescription.getText(),
-//                Double.parseDouble(txtPrice.getText()),
-//                txtQty.getText()));
-//    }
+    ItemService service = ServiceFactory.getInstance().getServiceType(ServiceType.ITEM);
 
-    @FXML
-    void btnLoardTableOnAction(ActionEvent event) throws IOException, SQLException {
-//        Stage stage = new Stage();
-//        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("View/viewItem.fxml"))));
-//        stage.show();
-
+     private void tableLoard(){
         colCode.setCellValueFactory(new PropertyValueFactory<>("code"));
         colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
-        colQty.setCellValueFactory(new PropertyValueFactory<>("qty"));
+        colQty.setCellValueFactory(new PropertyValueFactory<>("qtyOnHand"));
 
-        Connection connection = DbConnection.getInstance().getConnection();
         ArrayList<Item> itemArrayList = new ArrayList<>();
         try{
-            PreparedStatement prt = connection.prepareStatement("SELECT * FROM item");
-            ResultSet resultSet = prt.executeQuery();
+            ResultSet resultSet = CrudUtill.execute("SELECT * FROM item");
             while (resultSet.next()) {
                 Item item = new Item(resultSet.getString(1),resultSet.getString(2),resultSet.getDouble(3),resultSet.getString(4));
                 itemArrayList.add(item);
@@ -93,32 +85,51 @@ public class ItemFormController {
         }
         tblItemForm.setItems(FXCollections.observableArrayList(itemArrayList));
     }
+    @FXML
+    void btnLoardTableOnAction(ActionEvent event) {
+        tableLoard();
 
-    public void btnAddItemOnAction(ActionEvent event) throws IOException, SQLException {
-//        Stage stage = new Stage();
-//        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("View/viewItem.fxml"))));
-//        stage.show();
+    }
 
-        Connection connection = DbConnection.getInstance().getConnection();
+    public void btnAddItemOnAction(ActionEvent event){
+
         Item item = new Item(
                 txtCode.getText(),
-                txtUnitPrice.getText(),
-                Double.parseDouble(colCode.getText()),
-                colUnitPrice.getText());
-
+                txtDescription.getText(),
+                Double.parseDouble(txtUnitPrice.getText()),
+                txtQty.getText());
         try{
-            PreparedStatement psTm = connection.prepareStatement("INSERT INTO item VALUES(?,?,?,?)");
-            psTm.setString(1,item.getCode());
-            psTm.setString(2,item.getDescription());
-            psTm.setDouble(3,item.getUnitPrice());
-            psTm.setString(4,item.getQtyOnHand());
-
-            if(psTm.executeUpdate()>0){
-                new Alert(Alert.AlertType.INFORMATION,"Item added").show();
+            if (service.addItem(item)) {
+                new Alert(Alert.AlertType.INFORMATION, "Item Added!").show();
+                tableLoard();
             }
-        }catch (SQLException e){
-            throw new RuntimeException(e);
+        }catch(SQLException ex) {
+            throw new RuntimeException(ex);
         }
     }
 
+    public void btnDeleteItemOnAction(ActionEvent event) throws SQLException {
+        if(service.deleteItem(txtCode.getText())){
+            new Alert(Alert.AlertType.INFORMATION, "Item Deleted!").show();
+            tableLoard();
+        }
+    }
+
+    public void btnUpdateItemOnAction(ActionEvent event) {
+        Item item = new Item(
+                txtCode.getText(),
+                txtDescription.getText(),
+                Double.parseDouble(txtUnitPrice.getText()),
+                txtQty.getText());
+        try{
+            if (service.updateItem(item)) {
+                new Alert(Alert.AlertType.INFORMATION, "Item Updated!").show();
+                tableLoard();
+            }else{
+                new Alert(Alert.AlertType.INFORMATION, "Cannot find item.Retry with the correct item code!").show();
+            }
+        }catch(SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
 }

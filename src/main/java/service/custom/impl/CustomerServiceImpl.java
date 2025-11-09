@@ -1,11 +1,13 @@
 package service.custom.impl;
 
 import Model.Customer;
+import Model.Item;
 import repository.RepositoryFactory;
 import repository.custom.CustomerRepository;
 import service.custom.CustomerService;
 import utill.RepositoryType;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerServiceImpl implements CustomerService {
@@ -37,12 +39,16 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<Customer> getAll() {
-        return List.of();
+    public List<Customer> getAll() throws SQLException {
+        return customerRepository.getAll();
     }
 
     @Override
-    public List<String> getCustomerIds() {
-        return List.of();
+    public List<String> getCustomerIds() throws SQLException {
+        List<Customer> all = getAll();
+        ArrayList<String> customerIdList = new ArrayList<>();
+        System.out.println(customerIdList.toString());
+        all.forEach(customer -> customerIdList.add(customer.getId()));
+        return customerIdList;
     }
 }
